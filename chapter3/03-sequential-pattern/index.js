@@ -6,7 +6,11 @@ function iterateSeries(collection, iteratorCallback, finalCallback) {
     }
 
     process.nextTick(() => {
-      iteratorCallback(collection[index], () => {
+      iteratorCallback(collection[index], (err) => {
+        if (err) {
+          return finalCallback(err);
+        }
+
         iterate(index + 1);
       });
     });
@@ -23,10 +27,13 @@ iterateSeries(
     console.log(`Task for "${value}" started`);
     setTimeout(() => {
       console.log(`Task for "${value}" finished`);
-      done();
+      done(null);
     }, value * 100);
   },
-  () => {
+  (err) => {
+    if (err) {
+      console.error(err.message);
+    }
     console.log('All tasks are finished');
   }
 )
