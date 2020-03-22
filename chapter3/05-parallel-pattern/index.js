@@ -1,3 +1,10 @@
+/**
+ * This is an example of parallel execution of async funcitons using callbacks.
+ * `parallelAsync` will call the function `task` for each item of the `collection`.
+ * `task` should perform its async operations and call the `done` callback passed as an argument.
+ * `allFinished` will be called when all of the tasks are completed.
+ * Error handling is omitted.
+ */
 
 function parallelAsync(collection, task, allFinished) {
   let completed = 0;
@@ -17,7 +24,7 @@ parallelAsync(
     console.log(`Starting task for "${value}"`);
     setTimeout(() => {
       console.log(`Finished task for "${value}"`)
-      done(value);
+      done();
     }, value * 100);
   },
   () => {
